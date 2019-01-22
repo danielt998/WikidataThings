@@ -1,6 +1,6 @@
 import json
 
-def getDesc(lang_code, dict):
+def getDesc(lang_code, i):
     if i == None:
         return ''
     descs = i.get('descriptions')
@@ -17,7 +17,7 @@ def getDesc(lang_code, dict):
 def getID(dict):
     return dict.get('id')
 
-def getLangString(lang_code, dict):
+def getLangString(lang_code, i):
     if i == None:
         return ''
     labels = i.get('labels')

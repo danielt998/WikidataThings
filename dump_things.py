@@ -1,13 +1,13 @@
 from utils import *
 
 DELIMITER='\t'
-#FILE='/media/dtm/Seagate Expansion Drive/wikidata-20181231-all.json'
-FILE = '/media/dtm/wikidata/first1000lines.json'
+FILE='/media/dtm/Seagate Expansion Drive/wikidata-20181231-all.json'
+#FILE = '/media/dtm/wikidata/first1000lines.json'
 
 def do_filtering(lang_str, desc_str):
     return '(' in lang_str
 
-def dump(filter=do_filtering, folder_name='default_output', langs=['en','cy']):
+def dump(given_filter=do_filtering, folder_name='default_output', langs=['en','cy']):
     OUTPUT_FILE_SUFFIX='_labels_descs_v3.tsv'
     count=0
 
@@ -29,15 +29,15 @@ def dump(filter=do_filtering, folder_name='default_output', langs=['en','cy']):
                 i = json.loads(line[:-1])
             else:
                 i = json.loads(line)#TODO:test this works on the last line...
-            if i != '':
+            if i == None:
                 continue
-            output_string = ''
+            #output_string = ''
             for lang in langs:
                 lang_str = getLangString(lang, i)
                 desc_str = getDesc(lang, i)
-                if not filter(lang_str, desc_str):
+                if not given_filter(lang_str, desc_str):
                     continue
-                output_string = output_string + getID(i) + DELIMITER + lang_str + DELIMITER + desc_str
+                output_string = getID(i) + DELIMITER + lang_str + DELIMITER + desc_str
                 files[lang].write(output_string + '\n')
 
             #print(str+getDesc('en',i)+DELIMITER+getTypes(line)+DELIMITER+getCountry(line)+DELIMITER+getRegions(line))
